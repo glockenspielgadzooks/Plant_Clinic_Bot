@@ -29,7 +29,7 @@ pip install -r requirements.txt
 python main.py start
 ```
 
-> __Important:__ Ensure that the last command is executed from the application's root directory.
+> __Important:__ Ensure that the last 2 commands are executed from the application's root directory.
 
 ##### Built With:
 
