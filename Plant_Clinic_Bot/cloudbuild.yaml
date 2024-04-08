@@ -1,0 +1,25 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/mongo-image', '.']
+  id: 'BuildMongoImage'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/mongo-image']
+  id: 'PushMongoImage'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'mongo-deployment.yaml']
+  id: 'DeployMongo'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['rollout', 'status', 'deployment/mongo-deployment']
+  id: 'CheckMongoDeployment'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'mongo-service.yaml']
+  id: 'CreateMongoService'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['get', 'services']
+  id: 'GetServices'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['get', 'pods']
+  id: 'GetPods'
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['logs', '-l', 'app=mongo']
+  id: 'GetMongoLogs'
